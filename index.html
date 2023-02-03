@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="./node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="./node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"
+      integrity="sha256-J2sc79NPV/osLcIpzL3K8uJyAD7T5gaEFKlLDM18oxY="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <script>
+      var ctx = document.getElementById('myChart').getContext('2d');
+      var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['On Line', 'Off Line'],
+          datasets: [
+            {
+              label: '# of Votes',
+              data: [65, 5],
+              backgroundColor: ['green', 'gray'],
+              borderColor: ['white', 'white'],
+            },
+          ],
+        },
+        plugins: [
+          {
+            id: 'text',
+            beforeDraw: (chart, a, b) => {
+              const width = chart.width;
+              const height = chart.height;
+              const ctx = chart.ctx;
+
+              ctx.restore();
+              var fontSize = (height / 114).toFixed(2);
+              ctx.font = fontSize + 'em sans-serif';
+              ctx.textBaseline = 'middle';
+
+              var text = '75%',
+                textX = Math.round((width - ctx.measureText(text).width) / 2),
+                textY = height / 2;
+
+              ctx.fillText(text, textX, textY);
+              ctx.save();
+            },
+          },
+        ],
+        options: {
+          cutoutPercentage: 80,
+          legend: {
+            display: false,
+            labels: {
+              fontSize: 16, //point style's size is based on font style not boxed width.
+              usePointStyle: true,
+            },
+          },
+        },
+      });
+    </script>
+    <p>Responsive:</p>
+    <canvas id="myChart" width="200" height="200"></canvas>
+    <my-element></my-element>
+  </body>
+</html>
