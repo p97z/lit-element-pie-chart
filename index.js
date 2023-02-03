@@ -4,26 +4,30 @@ import Chart from 'chart.js';
 class MyElement extends LitElement {
   static get properties() {
     return {
-      Test: { type: String },
-      myChart: { type: Object },
+      data: { type: Array },
+      labels: { type: Array },
+      insideText: { type: String },
     };
   }
 
   constructor() {
     super();
+    this.data = [65, 5];
+    this.labels = ['On Line', ' Off Line'];
+    this.insideText = '65';
   }
 
   firstUpdated() {
-    const ctx = this.renderRoot.querySelector('#myChart2').getContext('2d');
+    const ctx = this.renderRoot.querySelector('#pieChart').getContext('2d');
 
     this.myChart = new Chart(ctx, {
       type: 'doughnut',
       data: {
-        labels: ['On Line', 'Off Line'],
+        labels: this.labels,
         datasets: [
           {
             label: '# of Votes',
-            data: [65, 5],
+            data: this.data,
             backgroundColor: ['green', 'gray'],
             borderColor: ['white', 'white'],
           },
@@ -38,11 +42,11 @@ class MyElement extends LitElement {
             const ctx = chart.ctx;
 
             ctx.restore();
-            var fontSize = (height / 114).toFixed(2);
+            const fontSize = (height / 114).toFixed(2);
             ctx.font = fontSize + 'em sans-serif';
             ctx.textBaseline = 'middle';
 
-            var text = '75%',
+            const text = this.insideText,
               textX = Math.round((width - ctx.measureText(text).width) / 2),
               textY = height / 2;
 
@@ -66,9 +70,9 @@ class MyElement extends LitElement {
 
   render() {
     return html`
-        <p>Inside Render:</p>
+        <p>Example Chart</p>
         <div>
-          <canvas id="myChart2" width="200" height="200"></canvas>
+          <canvas id="pieChart" width="200" height="200"></canvas>
         </div>
       `;
   }
