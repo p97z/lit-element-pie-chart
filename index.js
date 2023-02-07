@@ -1,5 +1,6 @@
 import { LitElement, html } from '@polymer/lit-element';
 import Chart from 'chart.js';
+import './line-chart.js';
 
 class MyElement extends LitElement {
   static get properties() {
@@ -12,6 +13,7 @@ class MyElement extends LitElement {
 
   constructor() {
     super();
+    debugger;
     this.data = [65, 5];
     this.labels = ['On Line', ' Off Line'];
     this.insideText = '65';
